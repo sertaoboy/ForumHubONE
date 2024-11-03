@@ -23,6 +23,7 @@ public class PerfilController {
     public void cadastrar(@RequestBody @Valid DadosCadastroPerfil dados) {
         System.out.println("Salvando no banco...");
         Perfil perfil = new Perfil(dados);
+        System.out.println("Perfil a ser salvo: " + perfil);
         repository.save(perfil);
     }
 

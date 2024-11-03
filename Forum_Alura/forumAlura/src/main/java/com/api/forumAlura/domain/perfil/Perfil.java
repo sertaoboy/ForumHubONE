@@ -28,8 +28,8 @@ public class Perfil {
 
 
     public Perfil(DadosCadastroPerfil dados) {
-        this.ativo = true;
         this.nome= dados.nome();
+        this.ativo = true;
     }
 
     public void atualizarInformacoes(DadosAtualizacaoPerfil dados) {
