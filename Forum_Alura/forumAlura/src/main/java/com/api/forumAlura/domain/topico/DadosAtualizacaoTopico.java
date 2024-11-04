@@ -1,4 +1,9 @@
 package com.api.forumAlura.domain.topico;
 
-public class DadosAtualizacaoTopico {
+import jakarta.validation.constraints.NotNull;
+
+public record DadosAtualizacaoTopico (@NotNull Long id,
+                                      String titulo,
+                                      String mensagem,
+                                      Boolean status) {
 }
