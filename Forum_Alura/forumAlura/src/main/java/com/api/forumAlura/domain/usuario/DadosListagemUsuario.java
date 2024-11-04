@@ -6,10 +6,11 @@ import com.api.forumAlura.domain.perfil.Perfil;
 
 import java.util.List;
 
-public record DadosListagemUsuario(String nome,
+public record DadosListagemUsuario(Long id,
+                                   String nome,
                                    String email,
                                    List<Perfil> perfis) {
     public DadosListagemUsuario(Usuario usuario){
-        this(usuario.getNome(), usuario.getEmail(), usuario.getPerfis());
+        this(usuario.getId(), usuario.getNome(), usuario.getEmail(), usuario.getPerfis());
     }
 }
