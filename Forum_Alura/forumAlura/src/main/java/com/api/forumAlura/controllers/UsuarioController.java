@@ -36,9 +36,9 @@ public class UsuarioController {
         Usuario usuario = repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
         Perfil novoPerfil = new Perfil(dadosPerfil);
-        novoPerfil.setUsuario(usuario); // Vincula o perfil ao usuário
-        usuario.getPerfis().add(novoPerfil); // Adiciona o perfil à lista
-        repository.save(usuario); // Salva as alterações
+        novoPerfil.setUsuario(usuario);
+        usuario.getPerfis().add(novoPerfil);
+        repository.save(usuario);
     }
 
     @GetMapping
