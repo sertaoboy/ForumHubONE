@@ -52,14 +52,15 @@ public class TopicoController {
     }
 
     @GetMapping
-    public Page<DadosListagemTopico> listar(@PageableDefault(size = 30,sort = {"id"}) Pageable paginacao){
-        return repository.findAll(paginacao)
+    public ResponseEntity<Page<DadosListagemTopico>> listar(@PageableDefault(size = 30,sort = {"id"}) Pageable paginacao){
+        var page = repository.findAll(paginacao)
                 .map(DadosListagemTopico::new);
+        return ResponseEntity.ok(page);
     }
 
     @PutMapping
     @Transactional
-    public void atualizar(@RequestBody @Valid DadosAtualizacaoTopico dados) {
+    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoTopico dados) {
         Topico topico = repository.findById(dados.id())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tópico não encontrado"));
 
@@ -73,13 +74,15 @@ public class TopicoController {
             topico.setStatus(dados.status());
         }
         repository.save(topico);
+        return ResponseEntity.ok(new DadosListagemTopico(topico));
     }
 
     @DeleteMapping("/{id}")
     @Transactional
-    public void excluir(@PathVariable Long id){
+    public ResponseEntity excluir(@PathVariable Long id){
         Topico topico = repository.getReferenceById(id);
         topico.excluir();
+        return ResponseEntity.noContent().build();
     }
 
 }
