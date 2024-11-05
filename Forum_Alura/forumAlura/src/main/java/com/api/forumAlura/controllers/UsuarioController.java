@@ -77,6 +77,12 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(@PathVariable Long id){
+        Usuario usuario = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosListagemUsuario(usuario));
+    }
+
 
 
 

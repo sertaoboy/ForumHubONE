@@ -85,4 +85,10 @@ public class TopicoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(@PathVariable Long id){
+        Topico topico = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosListagemTopico(topico));
+    }
+
 }
