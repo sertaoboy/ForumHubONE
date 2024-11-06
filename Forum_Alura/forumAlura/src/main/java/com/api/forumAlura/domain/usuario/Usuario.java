@@ -9,8 +9,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -21,7 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +39,9 @@ public class Usuario {
     @Email
     private String email;
 
-    @NotNull
-    private String senha;
+    @NotBlank
+    @Column(name = "senha")
+    private String password;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Perfil> perfis = new ArrayList<>(); // Inicializa a lista
@@ -47,7 +52,7 @@ public class Usuario {
     public Usuario(@Valid DadosCadastroUsuario dados) {
         this.nome = dados.nome();
         this.email = dados.email();
-        this.senha = dados.senha();
+        this.password = dados.senha();
         this.ativo = true;
         // adiciona perfis recebidos
         if (dados.perfil() != null) {
@@ -63,10 +68,40 @@ public class Usuario {
     public void atualizarInformacoes(DadosAtualizacaoUsuario dados) {
         this.nome= dados.nome();
         this.email= dados.email();
-        this.senha= dados.senha();
+        this.password = dados.senha();
     }
 
     public void excluir() {
         this.ativo=false;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getUsername() {
+        return nome;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
