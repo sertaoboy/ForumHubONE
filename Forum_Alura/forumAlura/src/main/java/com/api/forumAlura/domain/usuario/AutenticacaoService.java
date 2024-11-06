@@ -1,6 +1,5 @@
-package com.api.forumAlura.domain.usuario.login;
+package com.api.forumAlura.domain.usuario;
 
-import com.api.forumAlura.domain.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,6 +13,6 @@ public class AutenticacaoService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.findByLogin(username);
+        return repository.findByNome(username);
     }
 }
