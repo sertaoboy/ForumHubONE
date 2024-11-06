@@ -1,4 +1,5 @@
 package com.api.forumAlura.infra.security;
 
-public record DadosTokenJWT() {
+public record DadosTokenJWT(String tokenJWT) {
+
 }
