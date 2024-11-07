@@ -11,8 +11,8 @@
 6. https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpRequest.html
 7. https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpResponse.html
 
-## Dominios 
-``
+## Dominios :
+`
 forumAlura
 ├── src
  ├── main
@@ -83,7 +83,7 @@ forumAlura
            ├── V3__create-table-cursos.sql
            ├── V4__create-table-topicos.sql
            └── V5__create-table-respostas.sql
-``
+`
 ## Entidades:
 
 
