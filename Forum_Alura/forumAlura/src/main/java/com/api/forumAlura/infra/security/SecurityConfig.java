@@ -33,7 +33,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())  // Desativa a proteção CSRF
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/login").permitAll()  // Permite acesso ao login e ao registro de usuário
+                                .requestMatchers("/login", "/usuarios").permitAll()  // Permite acesso ao login e ao registro de usuário
                                 .requestMatchers("/topicos/**").authenticated()  // Exige autenticação para a rota /topicos
                                 .anyRequest().authenticated()  // Exige autenticação para todas as outras rotas
                 )
