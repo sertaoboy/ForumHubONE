@@ -19,7 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("usuarios")
+@RequestMapping("/usuarios")
 public class UsuarioController {
 
     @Autowired
@@ -74,7 +74,9 @@ public class UsuarioController {
     @Transactional
     public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoUsuario dados){
         Usuario usuario = repository.getReferenceById(dados.id());
+        String senhaCriptografada = passwordEncoder.encode(dados.senha());
         usuario.atualizarInformacoes(dados);
+        usuario.setPassword(senhaCriptografada);
         return ResponseEntity.ok(new DadosListagemUsuario(usuario));
     }
 
