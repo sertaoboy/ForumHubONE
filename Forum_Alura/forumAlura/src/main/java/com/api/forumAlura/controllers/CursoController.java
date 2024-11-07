@@ -32,11 +32,6 @@ public class CursoController {
         return ResponseEntity.created(uri).body(new DadosListagemCurso(curso));
     }
 
-//    @DeleteMapping("/deletarTodos")
-//    @Transactional
-//    public void deletarTodos() {
-//        repository.deleteAll();
-//    }
 
     @GetMapping
     public ResponseEntity<Page<DadosListagemCurso>> listar (@PageableDefault(size = 10,sort = {"nome"}) Pageable paginacao){
@@ -51,7 +46,7 @@ public class CursoController {
                 .map(DadosListagemCurso::new);
     }
 
-    @PutMapping //so funciona sem rotas adicionais (?)
+    @PutMapping
     @Transactional
     public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoCurso dados){
         Curso curso = repository.getReferenceById(dados.id());
@@ -66,9 +61,4 @@ public class CursoController {
         curso.excluir();
         return ResponseEntity.noContent().build();
     }
-
-
-
-
-
 }
