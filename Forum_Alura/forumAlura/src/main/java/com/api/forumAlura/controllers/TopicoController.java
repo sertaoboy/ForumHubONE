@@ -7,6 +7,7 @@ import com.api.forumAlura.domain.topico.*;
 
 import com.api.forumAlura.domain.usuario.Usuario;
 import com.api.forumAlura.domain.usuario.UsuarioRepository;
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.Id;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -37,6 +38,9 @@ public class TopicoController {
     @PostMapping
     @Transactional
     public ResponseEntity<Void> cadastrar(@RequestBody @Valid DadosCadastroTopico dados) {
+        if(repository.existsByTituloAndMensagem(dados.titulo(),dados.mensagem())) {   //Regra de negocio
+            throw new EntityExistsException("Ja existe um topico com o mesmo titulo e mensagem.");
+        }
         Usuario autor = usuarioRepository.findById(dados.autorId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
 
@@ -58,9 +62,9 @@ public class TopicoController {
         return ResponseEntity.ok(page);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizacaoTopico dados) {
+    public ResponseEntity <DadosListagemTopico> atualizar(@PathVariable Long id,@RequestBody @Valid DadosAtualizacaoTopico dados) {
         Topico topico = repository.findById(dados.id())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tópico não encontrado"));
 
