@@ -200,6 +200,23 @@ public class Perfil {
     }
 }
 ```
+### Resposta
+- Campos:
+```
+MariaDB [ForumHub]> describe respostas
+    -> ;
++--------------+------------+------+-----+---------------------+----------------+
+| Field        | Type       | Null | Key | Default             | Extra          |
++--------------+------------+------+-----+---------------------+----------------+
+| id           | bigint(20) | NO   | PRI | NULL                | auto_increment |
+| mensagem     | longtext   | NO   |     | NULL                |                |
+| data_criacao | timestamp  | YES  |     | current_timestamp() |                |
+| solucao      | tinyint(1) | YES  |     | 0                   |                |
+| topico_id    | bigint(20) | NO   | MUL | NULL                |                |
+| usuario_id   | bigint(20) | NO   | MUL | NULL                |                |
++--------------+------------+------+-----+---------------------+----------------+
+```
+- Relacionamentos: relacoes "muitos para um" entre as entidades Resposta, Topico(`topico_id`) e Usuario (`usuario_id`).
 ```java
 @Entity(name = "Resposta")
 @Table(name = "respostas")
@@ -233,6 +250,25 @@ public class Resposta {
 
 }
 ```
+### Topico
+- Campos:
+  
+```
+  MariaDB [ForumHub]> describe topicos;
+  +--------------+--------------+------+-----+---------------------+----------------+
+  | Field        | Type         | Null | Key | Default             | Extra          |
+  +--------------+--------------+------+-----+---------------------+----------------+
+  | id           | bigint(20)   | NO   | PRI | NULL                | auto_increment |
+  | titulo       | varchar(255) | NO   |     | NULL                |                |
+  | mensagem     | longtext     | NO   |     | NULL                |                |
+  | data_criacao | timestamp    | YES  |     | current_timestamp() |                |
+  | status       | tinyint(1)   | NO   |     | NULL                |                |
+  | usuario_id   | bigint(20)   | NO   | MUL | NULL                |                |
+  | curso_id     | bigint(20)   | NO   | MUL | NULL                |                |
+  | ativo        | tinyint(1)   | NO   |     | NULL                |                |
+  +--------------+--------------+------+-----+---------------------+----------------+
+  ```
+- Relacionamentos: a entidade Topico possui duas relacoes "muitos para um" com Usuario (`usuario_id`) e Curso (`curso_id`), e uma relacao "um para muitos" com a entidade Resposta.
 ```java
 @Entity(name = "Topico")
 @Table(name = "topicos")
@@ -288,6 +324,21 @@ public class Topico {
 
 }
 ```
+### Usuario
+- Campos:
+```
+MariaDB [ForumHub]> describe usuarios;
++-------+--------------+------+-----+---------+----------------+
+| Field | Type         | Null | Key | Default | Extra          |
++-------+--------------+------+-----+---------+----------------+
+| id    | bigint(20)   | NO   | PRI | NULL    | auto_increment |
+| nome  | varchar(100) | NO   |     | NULL    |                |
+| email | varchar(255) | NO   | UNI | NULL    |                |
+| senha | varchar(255) | NO   |     | NULL    |                |
+| ativo | tinyint(1)   | NO   |     | NULL    |                |
++-------+--------------+------+-----+---------+----------------+
+```
+- Relacionamentos: "Um para muitos", seguindo a logica bidirecional da entidade Perfil.
 ```java
 @Entity(name = "Usuario")
 @Table(name = "usuarios")
