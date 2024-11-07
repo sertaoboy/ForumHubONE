@@ -67,7 +67,15 @@ public class TopicoController {
     public ResponseEntity <DadosListagemTopico> atualizar(@PathVariable Long id,@RequestBody @Valid DadosAtualizacaoTopico dados) {
         Topico topico = repository.findById(dados.id())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tópico não encontrado"));
+        updateTopicoProperties(topico, dados);
+        if (repository.existsByTituloAndMensagem(dados.titulo(), dados.mensagem()) && !topico.getId().equals(id)) {
+            throw new EntityExistsException("Já existe outro tópico com o mesmo título e mensagem.");
+        }
+        repository.save(topico);
+        return ResponseEntity.ok(new DadosListagemTopico(topico));
+    }
 
+    private void updateTopicoProperties(Topico topico, DadosAtualizacaoTopico dados) {
         if (dados.titulo() != null) {
             topico.setTitulo(dados.titulo());
         }
@@ -77,8 +85,6 @@ public class TopicoController {
         if (dados.status() != null) {
             topico.setStatus(dados.status());
         }
-        repository.save(topico);
-        return ResponseEntity.ok(new DadosListagemTopico(topico));
     }
 
     @DeleteMapping("/{id}")
