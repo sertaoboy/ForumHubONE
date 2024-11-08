@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/login", "/usuarios").permitAll()  // Permite acesso ao login e ao registro de usuário
+                                .requestMatchers("v3/api-docs/**", "swagger-ui.html", "/swagger-ui/**").permitAll()
                                 .requestMatchers("/topicos/**").authenticated()  // Exige autenticação para a rota /topicos
                                 .anyRequest().authenticated()  // Exige autenticação para todas as outras rotas
                 )

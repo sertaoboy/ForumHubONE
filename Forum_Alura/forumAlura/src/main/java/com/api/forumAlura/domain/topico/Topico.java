@@ -59,7 +59,6 @@ public class Topico {
         this.dataCriacao = LocalDateTime.now();
         this.ativo = true;
         this.status = false;
-        // O autor e o curso serão definidos após a busca na base de dados
     }
 
     public void excluir() {

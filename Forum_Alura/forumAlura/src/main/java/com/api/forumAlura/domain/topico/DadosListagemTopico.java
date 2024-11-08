@@ -28,10 +28,10 @@ public record DadosListagemTopico(
                 topico.getDataCriacao(),
                 topico.getAtivo(),
                 topico.getStatus(),
-                new DadosListagemUsuario(topico.getAutor()), // DTO para Usuario
-                new DadosListagemCurso(topico.getCurso()),   // DTO para Curso
+                new DadosListagemUsuario(topico.getAutor()),
+                new DadosListagemCurso(topico.getCurso()),
                 topico.getRespostas().stream()
-                        .map(DadosListagemResposta::new) // Transformando Resposta em DadosListagemResposta
+                        .map(DadosListagemResposta::new)
                         .collect(Collectors.toList())
         );
     }
