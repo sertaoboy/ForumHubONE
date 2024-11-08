@@ -31,13 +31,6 @@ public class PerfilController {
         return ResponseEntity.created(uri).body(new DadosListagemPerfil(perfil));
     }
 
-//    @DeleteMapping("/deletarTodos")
-//    @Transactional
-//    public void deletarTodos() {
-//        repository.deleteAll();
-//    }
-
-
     @GetMapping
     public ResponseEntity<Page<DadosListagemPerfil>> listar (@PageableDefault(size = 10,sort = {"nome"}) Pageable paginacao){
         var page = repository.findAllByAtivoTrue(paginacao)
@@ -73,6 +66,4 @@ public class PerfilController {
         var perfil = repository.getReferenceById(id);
         return ResponseEntity.ok(new DadosListagemPerfil(perfil));
     }
-
-
 }
