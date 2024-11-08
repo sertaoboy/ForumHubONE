@@ -44,7 +44,7 @@ public class Usuario implements UserDetails {
     private String password;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Perfil> perfis = new ArrayList<>(); // Inicializa a lista
+    private List<Perfil> perfis = new ArrayList<>();
 
     private Boolean ativo;
 
@@ -54,11 +54,10 @@ public class Usuario implements UserDetails {
         this.email = dados.email();
         this.password = dados.senha();
         this.ativo = true;
-        // adiciona perfis recebidos
         if (dados.perfil() != null) {
             for (DadosCadastroPerfil dadosPerfil : dados.perfil()) {
                 Perfil perfil = new Perfil(dadosPerfil);
-                perfil.setUsuario(this); // vincula o perfil ao usuário
+                perfil.setUsuario(this);
                 this.perfis.add(perfil);
             }
         }
