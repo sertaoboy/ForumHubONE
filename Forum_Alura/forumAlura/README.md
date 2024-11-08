@@ -957,10 +957,10 @@ CREATE TABLE topicos (
     mensagem TEXT NOT NULL,
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status BOOLEAN NOT NULL,
-    usuario_id BIGINT NOT NULL,  -- Alterado de autor_id para usuario_id
+    usuario_id BIGINT NOT NULL,  
     curso_id BIGINT NOT NULL,
     ativo BOOLEAN NOT NULL,
-    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),  -- Alterado aqui também
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id), 
     FOREIGN KEY (curso_id) REFERENCES cursos(id)
 ); 
 ```
